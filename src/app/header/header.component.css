@@ -1,9 +1,16 @@
 .header_container {
     width: 100%;
     height: 82px;
-    background-color: rgb(10, 10, 10);
+    background-color: transparent;
     color: white;
     padding: 0 36px 0 36px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header_container.scrolled {
+    background-color: rgb(10, 10, 10); /* Cambia el color cuando se supere 82px */
 }
 
 .main_container {
@@ -64,7 +71,7 @@
 .login_button {
     display: block;
     padding: 8px 16px 8px 16px;
-    background-color: #222;
+    background-color: #aaa4;
     border: none;
     text-transform: uppercase;
     font-weight: 600;
