@@ -1,0 +1,81 @@
+.relative_container {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    font-family: Tungsten-Bold, sans-serif;
+}
+
+.main_container {
+    height: 100%;
+}
+
+.video_container {
+    height: 100%;
+    overflow: hidden;
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title_container {
+    position: absolute;
+    left: 48px;
+    top: 36px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.image_container {
+    cursor: pointer;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.title {
+    display: block;
+    text-transform: uppercase;
+    font-size: 36px;
+    font-weight: 800;
+    text-align: center;
+    text-wrap: balance;
+    color: white;
+    line-height: 1.2;
+}
+
+.title span {
+    display: inline;
+    background-color: black;
+    padding: 4px 8px;
+    box-decoration-break: clone;   /* funcion god para aplicar estilado por linea en los textos */
+    -webkit-box-decoration-break: clone;
+}
+
+.button_container {
+    position: absolute;
+    top: 30px;
+    right: 46px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 36px;
+    padding: 16px 32px;
+    background: linear-gradient(0deg, rgba(61, 82, 143, 0) 0%, rgba(10, 10, 10, 0.4) 100%), rgb(61, 82, 143);
+    border: 2px solid rgb(61, 82, 143);
+    transition: background-color 0.25s ease-in-out;
+}
+
+.button_container:hover {
+    background: linear-gradient(0deg, rgba(99, 116, 165, 0) 0%, rgba(10, 10, 10, 0.4) 100%), rgb(99, 116, 165);
+    border-color:rgb(99, 116, 165);
+}
+
+.button_ref {
+    text-decoration: none;
+    color: inherit;
+}
