@@ -76,3 +76,49 @@
     text-decoration: none;
     color:white
 }
+
+.menu_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #222;
+    fill: white;
+    cursor: pointer;
+    display: none;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .menu_button {
+        display: flex;
+    }
+    .login_button {
+        display: none;
+    }
+    .items_container {
+        display: none;
+    }
+
+    .language_button {
+        padding: 14px;
+        border-radius: 16px;
+    }
+
+    .language_button svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .logo_arcane {
+        display: none;
+    }
+
+    .header_container {
+        padding: 0 12px 0 12px;
+    }
+}
