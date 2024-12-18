@@ -14,8 +14,14 @@
 }
 
 .left_container {
+    height: 100%;
     display: flex;
     align-items: center;
+    gap: 20px;
+}
+
+.svg_left_container {
+    cursor: pointer;
 }
 
 .svg_left_container:hover svg {
@@ -29,4 +35,11 @@
 
 .logo_riot {
     margin-right: 2px;
+}
+
+.items_container {
+    height: 100%;
+    display: flex;
+    list-style-type: none;
+    gap: 4px;
 }
