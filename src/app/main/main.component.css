@@ -25,6 +25,7 @@
     left: 48px;
     top: 36px;
     max-width: 400px;
+    min-width: 200px;
     width: 100%;
 }
 
@@ -108,4 +109,53 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+@media screen and (max-width: 1024px) {
+    .netflix_container {
+        right: auto;
+        left: 48px;
+        bottom: 324px;
+    }
+
+    .title_container {
+        top: 24px;
+        right: 400px;
+        width: clamp(300px,40vw,400px);
+    }
+
+    .title {
+        font-size: clamp(28px, 3.1vw, 36px);
+    }
+
+    .button_container {
+        padding: 12px 32px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .netflix_container {
+        display: none;
+    }
+
+    .title_container {
+        top: 28px;
+        right: 0;
+        left: 0;
+        margin: auto;
+        width: clamp(0px,40vw,300px);
+    }
+
+    .title_container {
+        min-width: none;
+    }
+    
+    .button_container {
+        top: auto;
+        bottom: 380px;
+        right: 0;
+        left: 0;
+        margin: auto;
+        width: min-content;
+    }
 }
