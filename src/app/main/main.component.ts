@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { SmallCarouselComponent } from '../small-carousel/small-carousel.component';
 
 @Component({
   selector: 'app-main',
-  imports: [],
+  imports: [SmallCarouselComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css'
 })

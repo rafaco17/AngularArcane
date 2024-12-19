@@ -1,0 +1,7 @@
+<div>
+    <ol>
+        @for (item of items; track $index) {
+            <app-item-small-carousel [image]="item.image" [description]="item.name" [hrefUrl]="item.href" />
+        }
+    </ol>
+</div>

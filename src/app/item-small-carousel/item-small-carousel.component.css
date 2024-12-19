@@ -1,0 +1,72 @@
+.main_container {
+    display: block;
+    position: relative;
+    width: 330px;
+    background-color: transparent;
+    color: white;
+}
+
+.item_button {
+    background-color: transparent;
+    display: block;
+    border: none;
+    cursor: pointer;
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+}
+
+.item_button:hover {
+    transform: scale(1.1);
+}
+
+.item_button:hover .svg_container {
+    transform: scale(1.3);
+}
+
+.container_image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.image_item {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.container_description {
+    position: absolute;
+    bottom: 18px;
+    left: 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 375;
+    font-family: Tungsten-Bold, sans-serif;
+}
+
+.svg_container {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    background-color: azure;
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+}
+
+.svg_container svg {
+    fill: black;
+}
