@@ -10,13 +10,13 @@
     /* transform: translate3d(-354px, 0px, 0px); */
     /* transform: translate3d(-670px, 0px, 0px); */
     transition: transform 0.3s ease-in-out;
+    will-change: transform;
 }
 
 .testing {
     position: relative;
     padding: 0 48px;
     width: 100%;
-    background-color: aqua;
 }
 
 

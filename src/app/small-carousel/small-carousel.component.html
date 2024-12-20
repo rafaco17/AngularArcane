@@ -1,4 +1,4 @@
-<div class="carousel_container">
+<div class="carousel_container" (mousedown)="onMouseDown($event)">
     <div class="testing">
         <ol class="container_items">
             @for (item of items; track $index) {
