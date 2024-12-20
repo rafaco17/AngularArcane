@@ -33,6 +33,7 @@ export class SmallCarouselComponent implements OnInit {
   
 
   private disableButtonListener!: () => void
+  private resizeListener!: () => void
 
   constructor(private renderer: Renderer2) {}
 
@@ -41,6 +42,10 @@ export class SmallCarouselComponent implements OnInit {
     this.buttonLeftContainer = document.querySelector('.button_left') as HTMLElement
     this.buttonRightContainer = document.querySelector('.button_right') as HTMLElement
     
+    this.setSnapPoints()
+    this.resizeListener = this.renderer.listen('window', 'resize', () => {
+      this.setSnapPoints()
+    })
 
     this.disableButtonListener = this.renderer.listen('document','mousemove', () => {
       if (this.currentTranslateX >= this.snapPoints[0]) {
@@ -77,6 +82,31 @@ export class SmallCarouselComponent implements OnInit {
     if(this.disableButtonListener) {
       this.disableButtonListener()
     }
+
+    if(this.resizeListener) {
+      this.resizeListener
+    }
+  }
+
+  private setSnapPoints(): void {
+    const screenWidth = window.innerWidth;
+  
+    if (screenWidth >= 1300) {
+      this.snapPoints = [0, -354, -670];
+    } else if (screenWidth >= 1250) {
+      this.snapPoints = [0, -340, -640, -940];
+    } else if (screenWidth >= 1100) {
+      this.snapPoints = [0, -340, -680, -1060];
+    } else if (screenWidth >= 900) {
+      this.snapPoints = [0, -340, -680, -1060, -1300]
+    } else if (screenWidth >= 700) {
+      this.snapPoints = [0, -380, -736, -1100, -1440]
+    }
+
+    // FALTA COLOCAR MAS
+
+  
+    console.log('SnapPoints updated:', this.snapPoints);
   }
 
   onForward(): void {
