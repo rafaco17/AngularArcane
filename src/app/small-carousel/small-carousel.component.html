@@ -1,13 +1,18 @@
-<div class="carousel_container" (mousedown)="onMouseDown($event)">
+<div class="carousel_container" (mousedown)="onMouseDown($event)" draggable="false">
     <div class="testing">
         <ol class="container_items">
             @for (item of items; track $index) {
                 <app-item-small-carousel [image]="item.image" [description]="item.name" [hrefUrl]="item.href" />
             }
         </ol>
-        <div class="buttons_container">
-            <button (click)="onBackward()">ATRAS</button>
-            <button (click)="onForward()" >ADELANTE</button>
-        </div>
     </div>
+</div>
+
+<div class="buttons_container">
+    <button (click)="onBackward()" class="button_left" [disabled]="!buttonLeft">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 15 15"><path d="M8.293 2.293a1 1 0 0 1 1.414 0l4.5 4.5a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414-1.414L11 8.5H1.5a1 1 0 0 1 0-2H11L8.293 3.707a1 1 0 0 1 0-1.414"/></svg>
+    </button>
+    <button (click)="onForward()" class="button_right" [disabled]="!buttonRight">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 15 15"><path d="M8.293 2.293a1 1 0 0 1 1.414 0l4.5 4.5a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414-1.414L11 8.5H1.5a1 1 0 0 1 0-2H11L8.293 3.707a1 1 0 0 1 0-1.414"/></svg>
+    </button>
 </div>

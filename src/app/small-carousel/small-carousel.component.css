@@ -1,6 +1,6 @@
 .carousel_container {
     position: absolute;
-    bottom: 0px;
+    bottom: 12px;
 }
 
 .container_items {
@@ -19,19 +19,29 @@
     width: 100%;
 }
 
-
-
  /* MOMENTANEO */
 
 
 .buttons_container {
     position: absolute;
-    top: -30px  ;
+    bottom: 222px;
+    right: 46px;
+    
 
 }
 
 .buttons_container button {
-    background-color: brown;
-    width: 200px;
-    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    width: min-content;
+    fill: rgb(167, 182, 227);
+    background-color: transparent;
+}
+
+.button_left {
+    transform: rotate(180deg);
+    margin-right: 8px;
 }

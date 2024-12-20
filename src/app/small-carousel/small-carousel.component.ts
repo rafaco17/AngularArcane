@@ -1,4 +1,4 @@
-import { Component, Host, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { ItemSmallCarouselComponent } from '../item-small-carousel/item-small-carousel.component';
 
 @Component({
@@ -25,8 +25,58 @@ export class SmallCarouselComponent implements OnInit {
   private itemsContainer: HTMLElement | null = null;
   private animationFrame: number | null = null;
 
+  buttonLeft: boolean = true
+  buttonRight: boolean = false
+
+  private buttonLeftContainer: HTMLElement | null = null
+  private buttonRightContainer: HTMLElement | null = null
+  
+
+  private disableButtonListener!: () => void
+
+  constructor(private renderer: Renderer2) {}
+
   ngOnInit(): void {
-    this.itemsContainer = document.querySelector('.container_items') as HTMLElement;
+    this.itemsContainer = document.querySelector('.container_items') as HTMLElement
+    this.buttonLeftContainer = document.querySelector('.button_left') as HTMLElement
+    this.buttonRightContainer = document.querySelector('.button_right') as HTMLElement
+    
+
+    this.disableButtonListener = this.renderer.listen('document','mousemove', () => {
+      if (this.currentTranslateX >= this.snapPoints[0]) {
+        this.buttonLeft = false
+        if (this.buttonLeftContainer) {
+          this.buttonLeftContainer.style.cursor = 'not-allowed'
+          this.buttonLeftContainer.style.fill = '#535353'
+        }
+      } else {
+        this.buttonLeft = true
+        if (this.buttonLeftContainer) {
+          this.buttonLeftContainer.style.cursor = 'pointer'
+          this.buttonLeftContainer.style.fill = '#a7b6e3'
+        }
+      }
+
+      if (this.currentTranslateX <= this.snapPoints[this.snapPoints.length - 1] ) {
+        this.buttonRight = false
+        if (this.buttonRightContainer) {
+          this.buttonRightContainer.style.cursor = 'not-allowed';
+          this.buttonRightContainer.style.fill = '#535353'
+        }
+      } else {
+        this.buttonRight = true
+        if (this.buttonRightContainer) {
+          this.buttonRightContainer.style.cursor = 'pointer';
+          this.buttonRightContainer.style.fill = '#a7b6e3'
+        }
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    if(this.disableButtonListener) {
+      this.disableButtonListener()
+    }
   }
 
   onForward(): void {
@@ -62,6 +112,8 @@ export class SmallCarouselComponent implements OnInit {
 
     const deltaX = event.clientX - this.startX;
     this.currentTranslateX = this.lastTranslateX + deltaX * 0.75;
+
+    // console.log(this.currentTranslateX)
 
     // Usar requestAnimationFrame para suavizar
     this.scheduleUpdate();
