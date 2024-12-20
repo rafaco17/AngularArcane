@@ -4,6 +4,7 @@
     width: 330px;
     background-color: transparent;
     color: white;
+    user-select: none;
 }
 
 .item_button {

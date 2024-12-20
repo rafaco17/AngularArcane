@@ -1,5 +1,8 @@
-<div>
-    <ol>
+<div class="carousel_container" (mousedown)="onDragStart($event)"
+(mousemove)="onDragMove($event)"
+(mouseup)="onDragEnd()"
+(mouseleave)="onDragEnd()">
+    <ol class="container_items">
         @for (item of items; track $index) {
             <app-item-small-carousel [image]="item.image" [description]="item.name" [hrefUrl]="item.href" />
         }

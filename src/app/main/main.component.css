@@ -3,6 +3,7 @@
     height: 100vh;
     position: relative;
     font-family: Tungsten-Bold, sans-serif;
+    overflow: hidden;       /*POR VERSE*/
 }
 
 .main_container {

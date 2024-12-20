@@ -16,4 +16,36 @@ export class SmallCarouselComponent {
     { name : 'Arcane: Tráiler "Come Play"', image : 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/7d1f3b9692f198b77f8594ae56e19954fdfd8a1a-1920x1080.jpg?auto=format&fit=fill&q=80&w=413', href : 'https://www.youtube.com/watch?v=5Hy6M3Lk08c' },
     { name : 'Avance de Arcane en los juegos: Come Play', image : 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/9ff86200eed0c2566469e2f5834890df2b0c9050-1920x1080.jpg?auto=format&fit=fill&q=80&w=413',  href : 'https://www.youtube.com/watch?v=rR5vyzjGwmk&embeds_referring_euri=https%3A%2F%2Fwww.arcane.com%2F' }
   ]
+
+  private isDragging = false; // Estado de arrastre
+  private startX = 0;         // Posición inicial del puntero
+  private scrollLeft = 0;     // Posición inicial del scroll
+  
+  // Comienza el arrastre
+  onDragStart(event: MouseEvent): void {
+    const carousel = event.currentTarget as HTMLElement;
+    this.isDragging = true;
+    this.startX = event.pageX - carousel.offsetLeft;
+    this.scrollLeft = carousel.scrollLeft;
+    carousel.style.cursor = 'grabbing'; // Cambia el cursor durante el arrastre
+  }
+
+  // Durante el arrastre
+  onDragMove(event: MouseEvent): void {
+    if (!this.isDragging) return;
+
+    const carousel = event.currentTarget as HTMLElement;
+    const x = event.pageX - carousel.offsetLeft;
+    const walk = x - this.startX; // Distancia arrastrada
+    carousel.scrollLeft = this.scrollLeft - walk;
+  }
+
+  // Termina el arrastre
+  onDragEnd(): void {
+    this.isDragging = false;
+    const carousel = document.querySelector('.carousel_container') as HTMLElement;
+    if (carousel) {
+      carousel.style.cursor = 'grab'; // Restaura el cursor original
+    }
+  }
 }
