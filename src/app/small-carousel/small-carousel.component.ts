@@ -1,4 +1,4 @@
-import { Component, Host, HostListener } from '@angular/core';
+import { Component, Host, HostListener, OnInit } from '@angular/core';
 import { ItemSmallCarouselComponent } from '../item-small-carousel/item-small-carousel.component';
 
 @Component({
@@ -7,7 +7,7 @@ import { ItemSmallCarouselComponent } from '../item-small-carousel/item-small-ca
   templateUrl: './small-carousel.component.html',
   styleUrl: './small-carousel.component.css'
 })
-export class SmallCarouselComponent {
+export class SmallCarouselComponent implements OnInit {
   items = [
     { name : 'The Line | Videoclip', image : 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/47222b86ade6a92edc056f0b9cd4917178b81f44-1920x1080.jpg?auto=format&fit=fill&q=80&w=413', href : 'https://www.youtube.com/watch?v=E2Rj2gQAyPA' },
     { name : 'Paint the Town Blue', image : 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/640ac1698851dbb7428bb47dd2a9a075c3fed98e-2560x1441.png?auto=format&fit=fill&q=80&w=413', href : 'https://www.youtube.com/watch?v=pl2K9rvsS74' },
@@ -22,59 +22,83 @@ export class SmallCarouselComponent {
   private lastTranslateX: number = 0; // Última posición fija antes de comenzar a mover
   private snapPoints: number[] = [0, -354, -670]
   private isDragging: boolean = false; // Indica si el usuario está moviendo el carrusel
+  private itemsContainer: HTMLElement | null = null;
+  private animationFrame: number | null = null;
+
+  ngOnInit(): void {
+    this.itemsContainer = document.querySelector('.container_items') as HTMLElement;
+  }
 
   onForward(): void {
-    const currentIndex = this.snapPoints.indexOf(this.currentTranslateX)
-    if(currentIndex < this.snapPoints.length - 1) {
-      this.currentTranslateX = this.snapPoints[currentIndex + 1]
-      this.updateTransform(this.currentTranslateX)
+    const currentIndex = this.snapPoints.indexOf(this.currentTranslateX);
+    if (currentIndex < this.snapPoints.length - 1) {
+      this.animateTo(this.snapPoints[currentIndex + 1]);
     }
-  } 
+  }
 
   onBackward(): void {
-    const currentIndex = this.snapPoints.indexOf(this.currentTranslateX)
-    if(currentIndex !== 0) {
-      this.currentTranslateX = this.snapPoints[currentIndex - 1]
-      this.updateTransform(this.currentTranslateX)
+    const currentIndex = this.snapPoints.indexOf(this.currentTranslateX);
+    if (currentIndex !== 0) {
+      this.animateTo(this.snapPoints[currentIndex - 1]);
     }
   }
 
-  private updateTransform(value: number): void {
-    const itemsContainer = document.querySelector('.container_items') as HTMLElement;
-    itemsContainer.style.transform = `translate3d(${value}px, 0, 0)`;
+  onMouseDown(event: MouseEvent) {
+    this.startX = event.clientX;
+    this.isDragging = true;
+    this.lastTranslateX = this.currentTranslateX;
+
+
+    // Cancelar cualquier animación activa
+    if (this.animationFrame) {
+      cancelAnimationFrame(this.animationFrame);
+      this.animationFrame = null;
+    }
   }
 
-  onMouseDown(event : MouseEvent) {
-    this.startX = event.clientX
-    this.isDragging = true
-    this.lastTranslateX = this.currentTranslateX
-    console.log(this.startX, this.isDragging, this.lastTranslateX)
-  }
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent): void {
+    if (!this.isDragging) return;
 
-  @HostListener ('document:mousemove', ['$event'])
-  onMouseMove (event: MouseEvent): void {
-    if (!this.isDragging) return
-    
-    const deltaX = event.clientX - this.startX; 
+    const deltaX = event.clientX - this.startX;
     this.currentTranslateX = this.lastTranslateX + deltaX * 0.75;
-    this.updateTransform(this.currentTranslateX);
+
+    // Usar requestAnimationFrame para suavizar
+    this.scheduleUpdate();
   }
+  
+  @HostListener('document:mouseup')
+  onMouseUp(): void {
+    if (!this.isDragging) return;
 
-  @HostListener ('document:mouseup', ['$event'])
-  onMouseUp (): void {
-    if(!this.isDragging) return
-
-    this.isDragging = false
-    this.lastTranslateX = this.snapToClosestPoint(this.currentTranslateX); // Ajustar a la posición fija más cercana
+    this.isDragging = false;
+    const closestPoint = this.snapToClosestPoint(this.currentTranslateX);
+    this.animateTo(closestPoint); // Animar hasta la posición más cercana
   }
 
   private snapToClosestPoint(currentX: number): number {
-    const closestPoint = this.snapPoints.reduce((prev, curr) =>
+    return this.snapPoints.reduce((prev, curr) =>
       Math.abs(curr - currentX) < Math.abs(prev - currentX) ? curr : prev
     );
-    this.updateTransform(closestPoint); // Mover a la posición exacta del punto
-    this.currentTranslateX = closestPoint;
-    return closestPoint; // Devolver la nueva posición
   }
-  
+
+  private animateTo(target: number): void {
+    if (this.itemsContainer) {
+      this.itemsContainer.style.transition = 'transform 0.3s ease-out';
+      this.itemsContainer.style.transform = `translate3d(${target}px, 0, 0)`;
+    }
+    this.currentTranslateX = target;
+    this.lastTranslateX = target;
+  }
+
+  private scheduleUpdate(): void {
+    if (this.animationFrame) return;
+    this.animationFrame = requestAnimationFrame(() => {
+      if (this.itemsContainer) {
+        this.itemsContainer.style.transition = 'none';
+        this.itemsContainer.style.transform = `translate3d(${this.currentTranslateX}px, 0, 0)`;
+      }
+      this.animationFrame = null;
+    });
+  }
 }
