@@ -6,6 +6,12 @@
     overflow: hidden;       /*POR VERSE*/
 }
 
+@media screen and (max-width: 700px) {
+    .relative_container {
+        height: calc(100dvh - 136px);
+    }
+}
+
 .main_container {
     height: 100%;
 }
@@ -166,7 +172,7 @@
     
     .button_container {
         top: auto;
-        bottom: 380px;
+        bottom: clamp(140px,40vw,240px);
         right: 0;
         left: 0;
         margin: auto;

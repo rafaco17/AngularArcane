@@ -101,6 +101,12 @@ export class SmallCarouselComponent implements OnInit {
       this.snapPoints = [0, -340, -680, -1060, -1300]
     } else if (screenWidth >= 700) {
       this.snapPoints = [0, -380, -736, -1100, -1440]
+    } else if (screenWidth >= 410) {
+      this.snapPoints = [0, -340, -646, -900, -1200, -1500]
+    } else if (screenWidth >= 360) {
+      this.snapPoints = [0, -270, -540, -800, -1040, -1220]
+    } else {
+      this.snapPoints = [0, -270, -540, -800, -1040]
     }
 
     // FALTA COLOCAR MAS
