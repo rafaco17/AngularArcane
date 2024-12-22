@@ -61,3 +61,43 @@
     height: 100%;
     object-fit: cover;
 }
+
+@media screen and (max-width: 1024px) {
+    .section_synopsis {
+        height: auto;
+    }
+    
+    .content_container {
+        flex-direction: column;
+        gap: 40px;
+        align-items: start;
+    }
+
+    .image_container{
+        width: 100%;
+        height: max-content;
+    }
+
+    .content_container {
+        padding: 24px;
+    }
+
+    .title_generic {
+        line-height:normal;
+        word-break: break-all;
+    }
+
+    .title_description {
+        font-size: clamp(24px,3vw,32px);
+    }
+    
+    .main_title {
+        font-size: clamp(72px, 3vw, 80px);
+    }
+
+    .description_text {
+        font-size: clamp(12px, 3vw, 16px);
+        line-height: normal;
+    }
+
+}
