@@ -34,10 +34,21 @@
 
 .navegation_section .line_container {
     flex: 1;
+    position: relative;
+}
+
+.line_container::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 2px;
+    background-color: rgb(10, 10, 10);
 }
 
 .navegation_section hr {
     width: 100%;        /* Barra de progreso */
+    transition: width 0.6s ease-in-out;
 }
 
 .buttons_container button {

@@ -30,6 +30,7 @@ export class NotificationSectionComponent implements OnInit {
 
   private buttonLeftContainer: HTMLElement | null = null
   private buttonRightContainer: HTMLElement | null = null
+  private line : HTMLElement | null = null
 
   private disableButtonListener!: () => void
   private resizeListener!: () => void
@@ -40,6 +41,7 @@ export class NotificationSectionComponent implements OnInit {
     this.itemsContainer = document.querySelector('.carousel_notifications') as HTMLElement
     this.buttonLeftContainer = document.querySelector('#button_left') as HTMLElement
     this.buttonRightContainer = document.querySelector('#button_right') as HTMLElement
+    this.line = document.querySelector('#line') as HTMLElement
 
     this.disableButtonListener = this.renderer.listen('document','mousemove', () => {
       if (this.currentTranslateX >= this.snapPoints[0]) {
@@ -47,6 +49,9 @@ export class NotificationSectionComponent implements OnInit {
         if (this.buttonLeftContainer) {
           this.buttonLeftContainer.style.cursor = 'not-allowed'
           this.buttonLeftContainer.style.fill = '#535353'
+        }
+        if (this.line) {
+          this.line.style.width = '100%'
         }
       } else {
         this.buttonLeft = true
@@ -56,11 +61,20 @@ export class NotificationSectionComponent implements OnInit {
         }
       }
 
+      if (this.currentTranslateX <= this.snapPoints[1]) {
+        if (this.line) {
+          this.line.style.width = '50%'
+        }
+      }
+
       if (this.currentTranslateX <= this.snapPoints[this.snapPoints.length - 1] ) {
         this.buttonRight = false
         if (this.buttonRightContainer) {
           this.buttonRightContainer.style.cursor = 'not-allowed';
           this.buttonRightContainer.style.fill = '#535353'
+        }
+        if (this.line) {
+          this.line.style.width = '0%'
         }
       } else {
         this.buttonRight = true
