@@ -19,4 +19,6 @@
     list-style: none;
     display: flex;
     gap: 32px;
+    transform: translate3d(0px,0,0);
+    user-select: none;
 }
