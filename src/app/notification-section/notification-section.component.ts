@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { NotificationCardComponent } from '../notification-card/notification-card.component';
 
 @Component({
@@ -23,10 +23,63 @@ export class NotificationSectionComponent implements OnInit {
   private isDragging: boolean = false
   private animationFrame: number | null = null
   private itemsContainer: HTMLElement | null = null
+  private snapPoints: number[] = [0, -480, -955]
+
+  buttonLeft: boolean = true
+  buttonRight: boolean = false
+
+  private buttonLeftContainer: HTMLElement | null = null
+  private buttonRightContainer: HTMLElement | null = null
+
+  private disableButtonListener!: () => void
+  private resizeListener!: () => void
+    
+  constructor(private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.itemsContainer = document.querySelector('.carousel_notifications') as HTMLElement
-    console.log('Este es el componente padre: ',this.itemsContainer)
+    this.buttonLeftContainer = document.querySelector('#button_left') as HTMLElement
+    this.buttonRightContainer = document.querySelector('#button_right') as HTMLElement
+
+    this.disableButtonListener = this.renderer.listen('document','mousemove', () => {
+      if (this.currentTranslateX >= this.snapPoints[0]) {
+        this.buttonLeft = false
+        if (this.buttonLeftContainer) {
+          this.buttonLeftContainer.style.cursor = 'not-allowed'
+          this.buttonLeftContainer.style.fill = '#535353'
+        }
+      } else {
+        this.buttonLeft = true
+        if (this.buttonLeftContainer) {
+          this.buttonLeftContainer.style.cursor = 'pointer'
+          this.buttonLeftContainer.style.fill = '#a7b6e3'
+        }
+      }
+
+      if (this.currentTranslateX <= this.snapPoints[this.snapPoints.length - 1] ) {
+        this.buttonRight = false
+        if (this.buttonRightContainer) {
+          this.buttonRightContainer.style.cursor = 'not-allowed';
+          this.buttonRightContainer.style.fill = '#535353'
+        }
+      } else {
+        this.buttonRight = true
+        if (this.buttonRightContainer) {
+          this.buttonRightContainer.style.cursor = 'pointer';
+          this.buttonRightContainer.style.fill = '#a7b6e3'
+        }
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    if(this.disableButtonListener) {
+      this.disableButtonListener()
+    }
+
+    // if(this.resizeListener) {
+    //   this.resizeListener
+    // }
   }
 
   onMouseDown(event : MouseEvent) {
@@ -55,6 +108,14 @@ export class NotificationSectionComponent implements OnInit {
     if (!this.isDragging) return;
 
     this.isDragging = false
+    const closestPoint = this.snapToClosestPoint(this.currentTranslateX)
+    this.animateTo(closestPoint)
+  }
+
+  private snapToClosestPoint(currentX: number): number {
+    return this.snapPoints.reduce((prev, curr) =>
+      Math.abs(curr - currentX) < Math.abs(prev - currentX) ? curr : prev
+    );
   }
 
   private scheduleUpdate(): void {
@@ -66,5 +127,28 @@ export class NotificationSectionComponent implements OnInit {
       }
       this.animationFrame = null;
     });
+  }
+
+  onForward(): void {
+    const currentIndex = this.snapPoints.indexOf(this.currentTranslateX);
+    if (currentIndex < this.snapPoints.length - 1) {
+      this.animateTo(this.snapPoints[currentIndex + 1]);
+    }
+  }
+
+  onBackward(): void {
+    const currentIndex = this.snapPoints.indexOf(this.currentTranslateX);
+    if (currentIndex !== 0) {
+      this.animateTo(this.snapPoints[currentIndex - 1]);
+    }
+  }
+
+  private animateTo(target: number): void {
+    if (this.itemsContainer) {
+      this.itemsContainer.style.transition = 'transform 0.3s ease-out';
+      this.itemsContainer.style.transform = `translate3d(${target}px, 0, 0)`;
+    }
+    this.currentTranslateX = target;
+    this.lastTranslateX = target;
   }
 }

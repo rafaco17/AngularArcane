@@ -1,8 +1,9 @@
 .notification_section {
-    width: 100%;
+    width: calc(100% - 96px);
+    margin: auto;
     height: calc(100vh - 90px);
     position: relative;
-    padding: 48px;
+    padding: 48px 0;
     overflow: hidden;
 }
 
@@ -21,4 +22,36 @@
     gap: 32px;
     transform: translate3d(0px,0,0);
     user-select: none;
+}
+
+.navegation_section {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.navegation_section .line_container {
+    flex: 1;
+}
+
+.navegation_section hr {
+    width: 100%;        /* Barra de progreso */
+}
+
+.buttons_container button {
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    width: min-content;
+    fill: rgb(167, 182, 227);
+    background-color: transparent;
+}
+
+.button_left {
+    transform: rotate(180deg);
+    margin-right: 8px;
 }
