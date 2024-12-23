@@ -1,0 +1,8 @@
+<section class="notification_section">
+    <h3 class="title_notification">Celebra dentro del juego</h3>
+    <ol class="carousel_notifications">
+        @for (item of items; track $index) {
+            <app-notification-card [title]="item.title" [description]="item.description" [imageUrl]="item.image" [dateNotification]="item.date" />
+        }
+    </ol>
+</section>

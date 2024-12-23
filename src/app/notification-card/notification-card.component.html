@@ -1,0 +1,22 @@
+<li class="item_notification_container">
+    <button class="button_notification_container">
+        <div class="image_container_notification">
+            <img class="image_notification" src="{{ imageUrl }}" alt="{{ title }}">
+        </div>
+        <div class="svg_notification_container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                <path d="M17.6 18L8 8.4V17H6V5h12v2H9.4l9.6 9.6z"/>
+            </svg>
+        </div>
+    </button>
+    <div class="description_notification_container">
+        <div class="dates_notifcation_container">
+            <p>Actualizaciones del juego</p>
+            <time datetime="2024-11-09">{{ dateNotification }}</time>
+        </div>
+        <div class="titles_container">
+            <h4 class="title">{{title }}</h4>
+            <p class="description">{{ description }}</p>
+        </div>
+    </div>
+</li>

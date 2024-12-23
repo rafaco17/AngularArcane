@@ -1,0 +1,22 @@
+.notification_section {
+    width: 100%;
+    height: calc(100vh - 90px);
+    position: relative;
+    padding: 48px;
+    overflow: hidden;
+}
+
+.title_notification {
+    font-size: 48px;
+    font-family: Tungsten-Bold, sans-serif;
+    font-weight: 375;
+    text-transform: uppercase;
+    color: white;
+}
+
+.carousel_notifications {
+    margin-top: 28px;
+    list-style: none;
+    display: flex;
+    gap: 32px;
+}
