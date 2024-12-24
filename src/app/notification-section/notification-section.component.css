@@ -7,6 +7,13 @@
     overflow: hidden;
 }
 
+@media screen and (max-width: 420px) {
+    .notification_section {
+        height: auto;
+        width: calc(100% - 48px);
+    }
+}
+
 .title_notification {
     font-size: 48px;
     font-family: Tungsten-Bold, sans-serif;

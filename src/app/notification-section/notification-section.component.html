@@ -1,4 +1,4 @@
-<section class="notification_section" (mousedown)="onMouseDown($event)">
+<section class="notification_section" (mousedown)="onMouseDown($event)" [draggable]="false">
     <h3 class="title_notification">Celebra dentro del juego</h3>
     <ol class="carousel_notifications">
         @for (item of items; track $index) {

@@ -74,3 +74,26 @@
     margin-top: 8px;
     font-size: 17px;
 }
+
+@media screen and (max-width: 420px) {
+    .item_notification_container {
+        width: clamp(0px, 70vw, 300px);
+    }
+
+    .svg_notification_container {
+        padding: 8px;
+    }
+    
+    .titles_container .title {
+        font-size: 18px;
+        line-height:normal;
+    }
+
+    .titles_container .description {
+        font-size: 11px;
+    }
+
+    .dates_notifcation_container {
+        font-size: 12px;
+    }
+}

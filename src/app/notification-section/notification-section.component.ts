@@ -37,52 +37,99 @@ export class NotificationSectionComponent implements OnInit {
     
   constructor(private renderer: Renderer2) {}
 
+  private setSnapPoints(): void {
+    const screenWidth = window.innerWidth;
+  
+    if (screenWidth >= 740) {
+      this.snapPoints = [0, -480, -955]
+    } else if (screenWidth >= 430) {
+      this.snapPoints = [0, -620, -980]
+    } else if (screenWidth >= 330) {
+      this.snapPoints = [0, -300, -620, -940, -1260]
+    } else {
+      this.snapPoints = [0, -270, -520, -790, -1000]
+    }
+
+    console.log('Carrousel final',this.snapPoints)
+  }
+
+  private currenLineTranslate = () => {
+    const lengthSnapPoints = this.snapPoints.length
+      for (let i = (this.snapPoints.length - 1); i >= 0; i--) {
+        if (this.currentTranslateX <= this.snapPoints[i]) {
+          if(i === 0) {
+            if (this.line) {
+              this.line.style.width = '100%'
+              console.log('Calculo: 100%')
+              break
+            }
+          } else if (i === lengthSnapPoints - 1) {
+            if (this.line) {
+              this.line.style.width = '0%'
+              console.log('Calculo: 0%')
+              break
+            }
+          } else {
+            if (this.line) {
+              this.line.style.width = `${(100 / (lengthSnapPoints - 1) * (lengthSnapPoints - 1 - i))}%`
+              console.log('Calculo: ',(100 / (lengthSnapPoints - 1) * (lengthSnapPoints - 1 - i)))
+              break
+            }
+          }
+        }
+      }
+  }
+
+  private disableButton = () => {
+    if (this.currentTranslateX >= this.snapPoints[0]) {
+      this.buttonLeft = false
+      if (this.buttonLeftContainer) {
+        this.buttonLeftContainer.style.cursor = 'not-allowed'
+        this.buttonLeftContainer.style.fill = '#535353'
+      }
+      // if (this.line) {
+      //   this.line.style.width = '100%'
+      // }
+    } else {
+      this.buttonLeft = true
+      if (this.buttonLeftContainer) {
+        this.buttonLeftContainer.style.cursor = 'pointer'
+        this.buttonLeftContainer.style.fill = '#a7b6e3'
+      }
+    }
+
+    if (this.currentTranslateX <= this.snapPoints[this.snapPoints.length - 1] ) {
+      this.buttonRight = false
+      if (this.buttonRightContainer) {
+        this.buttonRightContainer.style.cursor = 'not-allowed';
+        this.buttonRightContainer.style.fill = '#535353'
+      }
+      // if (this.line) {
+      //   this.line.style.width = '0%'
+      // }
+    } else {
+      this.buttonRight = true
+      if (this.buttonRightContainer) {
+        this.buttonRightContainer.style.cursor = 'pointer';
+        this.buttonRightContainer.style.fill = '#a7b6e3'
+      }
+    }
+  }
+
   ngOnInit(): void {
     this.itemsContainer = document.querySelector('.carousel_notifications') as HTMLElement
     this.buttonLeftContainer = document.querySelector('#button_left') as HTMLElement
     this.buttonRightContainer = document.querySelector('#button_right') as HTMLElement
     this.line = document.querySelector('#line') as HTMLElement
+    this.setSnapPoints()
+
+    this.resizeListener = this.renderer.listen('window','resize', () => {
+      this.setSnapPoints()
+    })
 
     this.disableButtonListener = this.renderer.listen('document','mousemove', () => {
-      if (this.currentTranslateX >= this.snapPoints[0]) {
-        this.buttonLeft = false
-        if (this.buttonLeftContainer) {
-          this.buttonLeftContainer.style.cursor = 'not-allowed'
-          this.buttonLeftContainer.style.fill = '#535353'
-        }
-        if (this.line) {
-          this.line.style.width = '100%'
-        }
-      } else {
-        this.buttonLeft = true
-        if (this.buttonLeftContainer) {
-          this.buttonLeftContainer.style.cursor = 'pointer'
-          this.buttonLeftContainer.style.fill = '#a7b6e3'
-        }
-      }
-
-      if (this.currentTranslateX <= this.snapPoints[1]) {
-        if (this.line) {
-          this.line.style.width = '50%'
-        }
-      }
-
-      if (this.currentTranslateX <= this.snapPoints[this.snapPoints.length - 1] ) {
-        this.buttonRight = false
-        if (this.buttonRightContainer) {
-          this.buttonRightContainer.style.cursor = 'not-allowed';
-          this.buttonRightContainer.style.fill = '#535353'
-        }
-        if (this.line) {
-          this.line.style.width = '0%'
-        }
-      } else {
-        this.buttonRight = true
-        if (this.buttonRightContainer) {
-          this.buttonRightContainer.style.cursor = 'pointer';
-          this.buttonRightContainer.style.fill = '#a7b6e3'
-        }
-      }
+      this.currenLineTranslate()
+      this.disableButton()
     })
   }
 
@@ -91,9 +138,9 @@ export class NotificationSectionComponent implements OnInit {
       this.disableButtonListener()
     }
 
-    // if(this.resizeListener) {
-    //   this.resizeListener
-    // }
+    if(this.resizeListener) {
+      this.resizeListener
+    }
   }
 
   onMouseDown(event : MouseEvent) {
@@ -154,7 +201,7 @@ export class NotificationSectionComponent implements OnInit {
     const currentIndex = this.snapPoints.indexOf(this.currentTranslateX);
     if (currentIndex !== 0) {
       this.animateTo(this.snapPoints[currentIndex - 1]);
-    }
+    } 
   }
 
   private animateTo(target: number): void {
@@ -164,5 +211,7 @@ export class NotificationSectionComponent implements OnInit {
     }
     this.currentTranslateX = target;
     this.lastTranslateX = target;
+    this.currenLineTranslate()
+    this.disableButton()
   }
 }
