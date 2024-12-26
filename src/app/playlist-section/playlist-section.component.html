@@ -1,0 +1,24 @@
+<section>
+    <div>
+        <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX3KVUsNUmJc2" frameborder="0" width="100%" height="380px" [draggable]="false" allow="encrypted-media"></iframe>
+    </div>
+    <div>
+        <span>música de arcane</span>
+        <h2>
+            playlist oficial de arcane
+        </h2>
+        <p>
+            Todo lo que termina, desencadena un nuevo comienzo. Música de la temporada 2 de Arcane, ya disponible en Netflix.
+        </p>
+        <div>
+            <span>escúchala en</span>
+            <div>
+                <ul style="display: flex; list-style: none;">
+                    @for (item of socialNetworks; track $index) {
+                        <app-social-network-item [alt]="item.alt" [href]="item.href" [svgElement]="item.svg" [id]="'item_container_social_network_' + $index"/>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
