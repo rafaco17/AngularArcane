@@ -1,3 +1,8 @@
+.footer_container {
+    border-top: 2px solid #343434;
+    padding-top: 24px;
+}
+
 .social_networks_container {
     display: flex;
     gap: 12px;
@@ -67,10 +72,29 @@ ul svg {
     font-weight: 600;
     letter-spacing: 1px;
     transition: background-color 0.2s ease-in-out, color 0.3s ease-in-out;
+    text-align: center;
 }
 
 .button:hover {
     background-color: rgba(128,128,128,.3);
     color: rgb(61, 82, 143);
     
+}
+
+@media screen and (max-width: 500px) {
+    .social_networks_container {
+        flex-wrap: wrap;
+    }
+
+    .buttons_container {
+        flex-direction: column;
+        max-width: 280px;
+        margin: auto;
+        margin-top: 24px;
+        margin-bottom: 96px;
+    }
+
+    .descriptions_container {
+        max-width: 80%;
+    }
 }
