@@ -1,24 +1,32 @@
-<section>
-    <div>
-        <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX3KVUsNUmJc2" frameborder="0" width="100%" height="380px" [draggable]="false" allow="encrypted-media"></iframe>
+<section class="section_playlist_container">
+    <div class="background_container">
+        <img src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/9320f677f051ce53cef7918a1d2c55ce478fcd6f-3360x1224.png?auto=format&fit=fill&q=80&h=1224" alt="background in playlist section" class="image">
     </div>
-    <div>
-        <span>música de arcane</span>
-        <h2>
-            playlist oficial de arcane
-        </h2>
-        <p>
-            Todo lo que termina, desencadena un nuevo comienzo. Música de la temporada 2 de Arcane, ya disponible en Netflix.
-        </p>
-        <div>
-            <span>escúchala en</span>
-            <div>
-                <ul style="display: flex; list-style: none;">
-                    @for (item of socialNetworks; track $index) {
-                        <app-social-network-item [alt]="item.alt" [href]="item.href" [svgElement]="item.svg" [id]="'item_container_social_network_' + $index"/>
-                    }
-                </ul>
+    <div class="content_main_container">
+        <div id="responsive_left" class="container_iframe">
+            <iframe allowfullscreen="" allow="autoplay; encrypted-media; fullscreen; picture-in-picture;" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX3KVUsNUmJc2" frameborder="0" width="100%" height="100%" loading='lazy' [draggable]="false" class="iframe"></iframe>
+        </div>
+        <div class="description_container">
+            <span>música de arcane</span>
+            <h2>
+                playlist oficial de arcane
+            </h2>
+            <p>
+                Todo lo que termina, desencadena un nuevo comienzo. Música de la temporada 2 de Arcane, ya disponible en Netflix.
+            </p>
+            <div class="social_network_container">
+                <span>escúchala en</span>
+                <div>
+                    <ul class="list_container">
+                        @for (item of socialNetworks; track $index) {
+                            <app-social-network-item [alt]="item.alt" [href]="item.href" [svgElement]="item.svg" [id]="'item_container_social_network_' + $index"/>
+                        }
+                    </ul>
+                </div>
             </div>
+        </div>
+        <div id="responsive_right" class="container_iframe">
+            <iframe allowfullscreen="" allow="autoplay; encrypted-media; fullscreen; picture-in-picture;" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX3KVUsNUmJc2" frameborder="0" width="100%" height="100%" loading='lazy' [draggable]="false" class="iframe"></iframe>
         </div>
     </div>
 </section>
