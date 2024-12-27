@@ -1,0 +1,138 @@
+.characters_section {
+    padding: 52px;
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    max-width: 2000px;
+    margin: auto;
+}
+
+.characters_section > div {
+    flex: 1;
+}
+
+.description_container {
+    overflow: hidden;
+}
+
+.titles_container {
+    color: #f5f5f5;
+    text-align: center;
+}
+
+.titles_container span {
+    font-size: 22px;
+    font-family: Inter, sans-serif;
+}
+
+.carousel_main_container {
+    user-select: none;
+}
+
+.titles_container h2 {
+    font-size: 96px;
+    font-family: Tungsten-Bold, sans-serif;
+}
+
+.carousel_container {
+    margin-top: 36px;
+    display: flex;
+    gap: 64px;
+    list-style: none;
+    filter: brightness(50%);
+    padding-left: 24px;
+}
+
+.item_carousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    gap: 24px;
+    width: 80px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.item_carousel:hover {
+    transform: scale(1.1);
+}
+
+.image_container {
+    width: 60px;
+    border: 0.5px solid #f5f5f5;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.character_image_container {
+    width: 100%;
+}
+
+.description_character_container {
+    margin-top: 36px;
+    color: #f5f5f5;
+    text-align: center;
+    padding: 0 24px;
+}
+
+.description_character_container h3 {
+    font-size: 36px;
+    font-family: Tungsten-Bold, sans-serif;
+}
+
+.description_character_container p {
+    margin-top: 12px;
+    font-size: 18px;
+    font-family: Inter, sans-serif;
+    line-height: 32px;
+    text-wrap: pretty;
+}
+
+.navegation_section {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.navegation_section .line_container {
+    flex: 1;
+    position: relative;
+}
+
+.line_container::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 2px;
+    background-color: rgb(10, 10, 10);
+}
+
+.navegation_section hr {
+    width: 100%;        /* Barra de progreso */
+    transition: width 0.6s ease-in-out;
+}
+
+.buttons_container button {
+    border: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    width: min-content;
+    fill: rgb(167, 182, 227);
+    background-color: transparent;
+}
+
+.button_left {
+    transform: rotate(180deg);
+    margin-right: 8px;
+}
