@@ -4,6 +4,9 @@
     position: relative;
     font-family: Tungsten-Bold, sans-serif;
     overflow: hidden;       /*POR VERSE*/
+    max-width: 2000px;
+    max-height: 1200px;
+    margin: auto;
 }
 
 @media screen and (max-width: 700px) {

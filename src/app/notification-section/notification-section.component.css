@@ -5,6 +5,8 @@
     position: relative;
     padding: 48px 0;
     overflow: hidden;
+    max-width: 2000px;
+    max-height: 800px;
 }
 
 @media screen and (max-width: 420px) {
