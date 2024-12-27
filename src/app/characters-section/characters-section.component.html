@@ -8,9 +8,9 @@
             <h2>PERSONAJES</h2>
         </div>
         <div class="carousel_main_container" draggable="false">
-            <ul class="carousel_container">
+            <ul class="carousel_container" (mousedown)="onMouseDown($event)" >
                 @for (item of items; track $index) {
-                    <li class="item_carousel" (click)="setIndex($index)">
+                    <li [id]="'item_character' + $index" class="item_carousel" (click)="setIndex($index)">
                         <div class="image_container">
                             <img class="image" src="{{ item.image }}" alt="{{ item.name }}" draggable="false">
                         </div>
@@ -21,15 +21,15 @@
         </div>
         <div class="navegation_section">
             <div class="line_container" dir="rtl">
-                <hr id="line">
+                <hr id="lineTest">
             </div>
             <div class="buttons_container">
                 <!-- <button (click)="onBackward()" class="button_left" [disabled]="!buttonLeft"> -->
-                <button class="button_left">
+                <button class="button_left" id="button_leftTest" (click)="onBackward()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 15 15"><path d="M8.293 2.293a1 1 0 0 1 1.414 0l4.5 4.5a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414-1.414L11 8.5H1.5a1 1 0 0 1 0-2H11L8.293 3.707a1 1 0 0 1 0-1.414"/></svg>
                 </button>
                 <!-- <button (click)="onForward()" class="button_right" [disabled]="!buttonRight"> -->
-                <button class="button_right">
+                <button class="button_right" id="button_rightTest" (click)="onForward()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="20" viewBox="0 0 15 15"><path d="M8.293 2.293a1 1 0 0 1 1.414 0l4.5 4.5a1 1 0 0 1 0 1.414l-4.5 4.5a1 1 0 0 1-1.414-1.414L11 8.5H1.5a1 1 0 0 1 0-2H11L8.293 3.707a1 1 0 0 1 0-1.414"/></svg>
                 </button>
             </div>

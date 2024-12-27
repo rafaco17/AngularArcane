@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-characters-section',
@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './characters-section.component.html',
   styleUrl: './characters-section.component.css'
 })
-export class CharactersSectionComponent {
+export class CharactersSectionComponent  implements OnInit {
   items = [
     { name : 'JINX' , image : 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/f850f7d107f04ca8be55af03020e5d110edbbb21-1208x1208.png?auto=format&fit=fill&q=80&w=869', description : 'Jinx tenía el alma dividida en dos identidades: la fuerte y poderosa hija que crio el mismísimo Silco, y la temerosa y debilucha hermana pequeña de Vi. Ahora, tras aceptar el monstruo que Vi ha creado, Jinx se ha convertido en un receptáculo vacío, la chica maldita que echa todo a perder.'},
     { name : 'VI' , image : 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/1ba5b2ffe9b169beca98a76cafa94e71622217df-1208x1208.png?auto=format&fit=fill&q=80&w=869', description : 'Tras aceptar que Powder ya no existe, Vi asume lo que debe hacer: encargarse del monstruo que ha creado, es decir, Jinx. A sabiendas de lo peligrosa que puede llegar a ser su hermana, Vi se alía con Caitlyn y accede a portar la insignia de agente.'},
@@ -21,7 +21,6 @@ export class CharactersSectionComponent {
     { name : 'WARWICK', image : 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news/17a015a3b5be98f3b751049e3dec4033fa542957-1200x1200.jpg?auto=format&fit=fill&q=80&w=869', description : 'Warwick es una bestia creada por Singed cuya furia primitiva se debate con los retazos de humanidad que aún alberga en su interior. ¿Quedará algo de Vander después de tanto sufrimiento?'}
   ]
 
-
   private index: number = 0
 
   getIndex():number {
@@ -29,6 +28,213 @@ export class CharactersSectionComponent {
   }
 
   setIndex(newIndex : number):void {
+    const previousComponent = document.querySelector(`#item_character${this.index}`) as HTMLElement
+    const currentComponent  = document.querySelector(`#item_character${newIndex}`) as HTMLElement
+
+    previousComponent.style.filter = 'brightness(50%)' 
+    currentComponent.style.filter = 'brightness(100%)'
     this.index = newIndex
   }
+
+
+  private startX: number = 0
+  private currentTranslateX: number = 0
+  private lastTranslateX: number = 0
+  private isDragging: boolean = false
+  private animationFrame: number | null = null
+  private itemsContainer: HTMLElement | null = null
+  private snapPoints: number[] = [0, -600, -900]
+
+  buttonLeft: boolean = true
+  buttonRight: boolean = false
+
+  private buttonLeftContainer: HTMLElement | null = null
+  private buttonRightContainer: HTMLElement | null = null
+  private line : HTMLElement | null = null
+
+  private disableButtonListener!: () => void
+    private resizeListener!: () => void
+      
+    constructor(private renderer: Renderer2) {}
+  
+    private setSnapPoints(): void {
+      const screenWidth = window.innerWidth;
+    
+      if (screenWidth >= 740) {
+        this.snapPoints = [0, -600, -900]
+      } else if (screenWidth >= 430) {
+        this.snapPoints = [0, -620, -980]
+      } else if (screenWidth >= 330) {
+        this.snapPoints = [0, -300, -620, -940, -1260]
+      } else {
+        this.snapPoints = [0, -270, -520, -790, -1000]
+      }
+  
+      // console.log('Carrousel final',this.snapPoints)
+    }
+
+
+  private currenLineTranslate = () => {
+    const lengthSnapPoints = this.snapPoints.length
+      for (let i = (this.snapPoints.length - 1); i >= 0; i--) {
+        if (this.currentTranslateX <= this.snapPoints[i]) {
+          if(i === 0) {
+            if (this.line) {
+              this.line.style.width = '100%'
+              console.log('Calculo: 100%')
+              break
+            }
+          } else if (i === lengthSnapPoints - 1) {
+            if (this.line) {
+              this.line.style.width = '0%'
+              console.log('Calculo: 0%')
+              break
+            }
+          } else {
+            if (this.line) {
+              this.line.style.width = `${(100 / (lengthSnapPoints - 1) * (lengthSnapPoints - 1 - i))}%`
+              console.log('Calculo: ',(100 / (lengthSnapPoints - 1) * (lengthSnapPoints - 1 - i)))
+              break
+            }
+          }
+        }
+      }
+  }
+
+  private disableButton = () => {
+    if (this.currentTranslateX >= this.snapPoints[0]) {
+      this.buttonLeft = false
+      if (this.buttonLeftContainer) {
+        this.buttonLeftContainer.style.cursor = 'not-allowed'
+        this.buttonLeftContainer.style.fill = '#535353'
+      }
+      // if (this.line) {
+      //   this.line.style.width = '100%'
+      // }
+    } else {
+      this.buttonLeft = true
+      if (this.buttonLeftContainer) {
+        this.buttonLeftContainer.style.cursor = 'pointer'
+        this.buttonLeftContainer.style.fill = '#a7b6e3'
+      }
+    }
+
+    if (this.currentTranslateX <= this.snapPoints[this.snapPoints.length - 1] ) {
+      this.buttonRight = false
+      if (this.buttonRightContainer) {
+        this.buttonRightContainer.style.cursor = 'not-allowed';
+        this.buttonRightContainer.style.fill = '#535353'
+      }
+      // if (this.line) {
+      //   this.line.style.width = '0%'
+      // }
+    } else {
+      this.buttonRight = true
+      if (this.buttonRightContainer) {
+        this.buttonRightContainer.style.cursor = 'pointer';
+        this.buttonRightContainer.style.fill = '#a7b6e3'
+      }
+    }
+  }
+
+  ngOnInit():void {
+    this.itemsContainer = document.querySelector('.carousel_main_container') as HTMLElement
+    this.buttonLeftContainer = document.querySelector('#button_leftTest') as HTMLElement
+    this.buttonRightContainer = document.querySelector('#button_rightTest') as HTMLElement
+    this.line = document.querySelector('#lineTest') as HTMLElement
+
+    this.setSnapPoints()
+
+    this.resizeListener = this.renderer.listen('window','resize', () => {
+      this.setSnapPoints()
+    })
+
+    this.disableButtonListener = this.renderer.listen('document','mousemove', () => {
+      this.currenLineTranslate()
+      this.disableButton()
+    })
+  }
+
+  ngOnDestroy(): void {
+    if(this.disableButtonListener) {
+      this.disableButtonListener()
+    }
+
+    if(this.resizeListener) {
+      this.resizeListener
+    }
+  }
+
+  onMouseDown(event : MouseEvent) {
+    this.startX = event.clientX
+    this.isDragging = true
+    this.lastTranslateX = this.currentTranslateX
+
+    if (this.animationFrame) {
+      cancelAnimationFrame(this.animationFrame)
+      this.animationFrame = null
+    }
+  }
+
+  @HostListener('document:mousemove',['$event'])
+    onMouseMove(event : MouseEvent): void {
+      if (!this.isDragging) return
+  
+      const deltaX = event.clientX - this.startX
+      this.currentTranslateX = Math.min(this.lastTranslateX + deltaX * 0.75, 500) 
+  
+      this.scheduleUpdate()
+    }
+
+  @HostListener('document:mouseup')
+    onMouseUp(): void {
+      if (!this.isDragging) return;
+  
+      this.isDragging = false
+      const closestPoint = this.snapToClosestPoint(this.currentTranslateX)
+      this.animateTo(closestPoint)
+    }
+  
+  private snapToClosestPoint(currentX: number): number {
+    return this.snapPoints.reduce((prev, curr) =>
+      Math.abs(curr - currentX) < Math.abs(prev - currentX) ? curr : prev
+    );
+  }
+
+  private scheduleUpdate(): void {
+    if (this.animationFrame) return;
+    this.animationFrame = requestAnimationFrame(() => {
+      if (this.itemsContainer) {
+        this.itemsContainer.style.transition = 'none';
+        this.itemsContainer.style.transform = `translate3d(${this.currentTranslateX}px, 0, 0)`;
+      }
+      this.animationFrame = null;
+    });
+  }
+
+  onForward(): void {
+    const currentIndex = this.snapPoints.indexOf(this.currentTranslateX);
+    if (currentIndex < this.snapPoints.length - 1) {
+      this.animateTo(this.snapPoints[currentIndex + 1]);
+    }
+  }
+
+  onBackward(): void {
+    const currentIndex = this.snapPoints.indexOf(this.currentTranslateX);
+    if (currentIndex !== 0) {
+      this.animateTo(this.snapPoints[currentIndex - 1]);
+    } 
+  }
+
+  private animateTo(target: number): void {
+    if (this.itemsContainer) {
+      this.itemsContainer.style.transition = 'transform 0.3s ease-out';
+      this.itemsContainer.style.transform = `translate3d(${target}px, 0, 0)`;
+    }
+    this.currentTranslateX = target;
+    this.lastTranslateX = target;
+    this.currenLineTranslate()
+    this.disableButton()
+  }
+
 }
