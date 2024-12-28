@@ -99,6 +99,11 @@
 }
 
 @media screen and (max-width: 1024px) {
+
+    .section_playlist_container {
+        max-height: none;
+    }
+
     .social_network_container {
         position: relative;
         margin-top: 24px;
@@ -137,6 +142,10 @@
 }
 
 @media screen and (max-width: 600px) {
+
+    .section_playlist_container {
+        max-height: none;
+    }
 
     .description_container > h2 {
         font-size: 64px;

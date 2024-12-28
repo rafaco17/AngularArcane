@@ -43,7 +43,7 @@ export class CharactersSectionComponent  implements OnInit {
   private isDragging: boolean = false
   private animationFrame: number | null = null
   private itemsContainer: HTMLElement | null = null
-  private snapPoints: number[] = [0, -600, -900]
+  private snapPoints: number[] = [0, -120, -240, -360, -480, -600]
 
   buttonLeft: boolean = true
   buttonRight: boolean = false
@@ -60,14 +60,16 @@ export class CharactersSectionComponent  implements OnInit {
     private setSnapPoints(): void {
       const screenWidth = window.innerWidth;
     
-      if (screenWidth >= 740) {
-        this.snapPoints = [0, -600, -900]
-      } else if (screenWidth >= 430) {
-        this.snapPoints = [0, -620, -980]
-      } else if (screenWidth >= 330) {
-        this.snapPoints = [0, -300, -620, -940, -1260]
+      if (screenWidth >= 1290) {
+        this.snapPoints = [0, -120, -240, -360, -480, -600]
+      } else if (screenWidth >= 1026) {
+        this.snapPoints = [0, -120, -240, -360, -480, -600, -720]
+      } else if (screenWidth >= 680) {
+        this.snapPoints = [0, -200, -400, -600, -800, -1000, -1200, -1500]
+      } else if(screenWidth >= 320){
+        this.snapPoints = [0, -140, -280, -420, -600, -740, -980]
       } else {
-        this.snapPoints = [0, -270, -520, -790, -1000]
+        this.snapPoints = [0, -140, -280, -420, -600]
       }
   
       // console.log('Carrousel final',this.snapPoints)

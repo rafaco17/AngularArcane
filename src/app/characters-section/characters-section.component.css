@@ -13,7 +13,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: calc(100%);
+    width: 100%;
     height: 100%;
     z-index: -10;
 }
@@ -24,6 +24,7 @@
 
 .description_container {
     overflow: hidden;
+    min-width: 570px;
 }
 
 .titles_container {
@@ -150,4 +151,41 @@
 .button_left {
     transform: rotate(180deg);
     margin-right: 8px;
+}
+
+
+@media screen and (max-width: 1025px) {
+    .characters_section {
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    .description_container {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .item_carousel {
+        min-width: clamp(75px, 22vw, 300px);
+    }
+
+    .background_container .image {
+        object-position: center;
+    }
+
+    .description_character_container h3 {
+        font-size: 32px;
+    }
+    
+    .description_character_container p {
+        font-size: 16px;
+    }
+
+    .titles_container span {
+        font-size: 18px;
+    }
+    
+    .titles_container h2 {
+        font-size: 64px;
+    }
 }
