@@ -12,3 +12,6 @@
     font-family: "FF Mark W05",Arial,sans-serif;
 }
 
+.no-scroll {
+    overflow: hidden;
+}

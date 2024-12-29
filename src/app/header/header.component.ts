@@ -17,7 +17,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private renderer: Renderer2) {}
 
+  private modalElement: HTMLElement | null = null
+
   ngOnInit(): void {
+    this.modalElement = document.querySelector('#modal') as HTMLElement
+
+    if (this.modalElement) {
+      this.modalElement.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        // Verifica si se hizo clic en el pseudo-elemento ::before
+        if (this.isClickOnPseudoElement(target)) {
+          this.closeModal();
+        }
+      });
+    }
+
     this.scrollListener = this.renderer.listen('window','scroll',() => {
       const header = document.getElementById('header')
       if(window.scrollY > 82) {
@@ -33,4 +47,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.scrollListener()
     }
   }
+
+  isClickOnPseudoElement(target: HTMLElement): boolean {
+    const computedStyle = window.getComputedStyle(target, '::before');
+    return computedStyle && computedStyle.content !== 'none';
+  }
+
+  openModal():void {
+    if(this.modalElement) {
+      this.modalElement.style.display = 'block'
+      this.renderer.addClass(document.body, 'no-scroll')
+    }
+  }
+
+  closeModal():void {
+    if(this.modalElement) {
+      this.modalElement.style.display = 'none'
+      this.renderer.removeClass(document.body, 'no-scroll')
+    }
+  }
+
 }

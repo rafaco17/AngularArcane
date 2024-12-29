@@ -7,6 +7,7 @@
     position: sticky;
     top: 0;
     z-index: 10;
+    position: relative;
 }
 
 .header_container.scrolled {
@@ -97,6 +98,137 @@
     display: none;
 }
 
+.dialog_container {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f9f9f9;
+    color: #222;
+    z-index: 20;
+    padding: 24px 48px;
+    padding-bottom: 48px;
+    z-index: 10;
+}
+
+.dialog_container::before {
+    content: '';
+    width: 100%;
+    height: calc(100dvh - 100%);
+    background-color: #0a0a0aaa;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: -40;
+}
+
+
+.dialog_container .logo_riot {
+    fill: #222;
+}
+
+.dialog_container .arrow {
+    transform: rotate(180deg);
+}
+
+.buttons_section_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttons_section_container button {
+    border: none;
+    display: block;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.content_header_container {
+    display: flex;
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.content_header_container > div {
+    flex: 1;
+}
+
+.images_notifications_container {
+    display: flex;
+    column-gap: 24px;
+}
+
+.images_notifications_container > div {
+    flex: 1; 
+}
+
+.image_container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 0px 20px -12px  rgba(0, 0, 0, 0.71);
+}
+
+.image_container:hover {
+    box-shadow: 0 5px 30px -12px  rgba(0, 0, 0, 0.30);
+}
+
+.image {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.main_image_container p {
+    margin-top: 12px;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+}
+
+.options_container {
+    display: flex;
+    width: 100%;
+    gap: 12px;
+}
+
+.options_container > div {
+    flex: 1;
+}
+
+.options_container ul {
+    list-style: none;
+}
+
+.title_option_container {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: rgba(186,186,186,.1);
+    color: #0a0a0a;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    border-radius: 4px;
+}
+
+.option_container {
+    width: 100%;
+    text-decoration: none;
+    display: block;
+    color: #0a0a0a;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 8px 16px;
+}
+
+.option_container:hover{
+    background-color: #4a4a4a44;
+}
 
 @media screen and (max-width: 1024px) {
     .menu_button {
