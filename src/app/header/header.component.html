@@ -53,8 +53,8 @@
                         <div class="title_option_container">
                             Juegos
                         </div>
-                        <li><a class="option_container" href="#">LEAGUE OF LEGENDS</a></li>
-                        <li><a class="option_container" href="#">VALORANT</a></li>
+                        <li (mouseleave)="onMouseUp()" (mouseenter)="onMouseEnter({description: '', imageUrl: 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/riotbar/9f6c08831b0d22c4c929fc50ada08d29650f1917-1280x721.jpg??&format=pjpg&quality=85'})"><a class="option_container" href="#">LEAGUE OF LEGENDS</a></li>
+                        <li (mouseleave)="onMouseUp()" (mouseenter)="onMouseEnter({description: '', imageUrl: 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/riotbar/00acf75deb633d53bd11ba9170e4fc9d4afcf4c5-1920x1080.jpg??&format=pjpg&quality=85'})" ><a class="option_container" href="#">VALORANT</a></li>
                         <li><a class="option_container" href="#">TEAMFIGHT TACTICS</a></li>
                         <li><a class="option_container" href="#">LEGENDS OF RUNETERRA</a></li>
                         <li><a class="option_container" href="#">LOL: WILD RIFT</a></li>
@@ -101,13 +101,13 @@
                 </div>
             </div>
             <div class="images_notifications_container">
-                <div class="main_image_container">
+                <div id="imageSet" class="main_image_container">
                     <div class="image_container">
-                        <img class="image" src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/riotbar/28fe569a5aab5a4ba80e722cd4e873e30cbb2782-660x428.jpg??&format=pjpg&quality=85" alt="Recread vuestras batallas favoritas de Arcane en el nuevo set de TFT.">
+                        <img class="image" [src]="cardHeader.imageUrl" [alt]="cardHeader.description">
                     </div>
-                    <p>Recread vuestras batallas favoritas de Arcane en el nuevo set de TFT.</p>
+                    <p>{{ cardHeader.description }}</p>
                 </div>
-                <div class="main_image_container">
+                <div id="imageDisabled" class="main_image_container">
                     <div class="image_container">
                         <img class="image" src="https://cmsassets.rgpub.io/sanity/images/dsfx7636/riotbar/25cfe3b02e8f4c31bc53a07d65be19a6accd0847-660x428.png??&format=pjpg&quality=85" alt="Ha llegado la hora de la verdad. Ya está aquí el Episodio 09: Acto III.">
                     </div>

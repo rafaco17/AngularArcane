@@ -83,19 +83,19 @@ export class CharactersSectionComponent  implements OnInit {
           if(i === 0) {
             if (this.line) {
               this.line.style.width = '100%'
-              console.log('Calculo: 100%')
+              // console.log('Calculo: 100%')
               break
             }
           } else if (i === lengthSnapPoints - 1) {
             if (this.line) {
               this.line.style.width = '0%'
-              console.log('Calculo: 0%')
+              // console.log('Calculo: 0%')
               break
             }
           } else {
             if (this.line) {
               this.line.style.width = `${(100 / (lengthSnapPoints - 1) * (lengthSnapPoints - 1 - i))}%`
-              console.log('Calculo: ',(100 / (lengthSnapPoints - 1) * (lengthSnapPoints - 1 - i)))
+              // console.log('Calculo: ',(100 / (lengthSnapPoints - 1) * (lengthSnapPoints - 1 - i)))
               break
             }
           }

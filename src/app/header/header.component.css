@@ -230,6 +230,7 @@
     background-color: #4a4a4a44;
 }
 
+
 @media screen and (max-width: 1024px) {
     .menu_button {
         display: flex;
