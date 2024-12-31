@@ -24,20 +24,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private modalElement: HTMLElement | null = null
   private dinamicContainer: HTMLElement | null = null
+  private dialogElement: HTMLDialogElement | null = null
 
   ngOnInit(): void {
     this.modalElement = document.querySelector('#modal') as HTMLElement
     this.dinamicContainer = document.querySelector('#imageDisabled') as HTMLElement
-
+    this.dialogElement = document.getElementById('myDialog') as HTMLDialogElement
 
     if (this.modalElement) {
       this.modalElement.addEventListener('click', (event) => {
         const target = event.target as HTMLElement;
         // Verifica si se hizo clic en el pseudo-elemento ::before
-        if (this.isClickOnPseudoElement(target)) {
+        if (this.isClickOnPseudoElement(target, 'before')) {
           this.closeModal();
         }
       });
+    }
+
+    if (this.dialogElement) {
+      this.dialogElement.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement
+        if (target === this.dialogElement) {
+          this.closeDialog()
+        }
+      })
     }
 
     this.scrollListener = this.renderer.listen('window','scroll',() => {
@@ -56,8 +66,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  isClickOnPseudoElement(target: HTMLElement): boolean {
-    const computedStyle = window.getComputedStyle(target, '::before');
+  isClickOnPseudoElement(target: HTMLElement, element: string): boolean {
+    const computedStyle = window.getComputedStyle(target, `::${element}`);
     return computedStyle && computedStyle.content !== 'none';
   }
 
@@ -93,6 +103,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  openDialog():void {
+    if(this.dialogElement) {
+      this.dialogElement.showModal()
+      this.renderer.addClass(document.body, 'no-scroll')
+    }
+  }
+
+  closeDialog():void {
+    if(this.dialogElement) {
+      this.dialogElement.close()
+      this.renderer.removeClass(document.body, 'no-scroll')
+    }
+  }
 }
 
 interface PropCardHeader {
